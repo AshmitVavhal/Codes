@@ -1,0 +1,61 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Test {
+public:
+    void writeData() {
+        fstream file;
+        string line;
+        file.open("it.txt", ios::out);
+        if (!file) {
+            cout << "Error opening file for writing.\n";
+            return;
+        }
+        cout << "Enter data (end with '.'): ";
+        cin.ignore(); // Clear the input buffer
+        getline(cin, line, '.'); // Read until a period is encountered
+        file << line; // Write the line to the file
+        file.close();
+        cout << "Data written to file.\n";
+    }
+
+    void readData() {
+        fstream file;
+        string line;
+        file.open("it.txt", ios::in);
+        if (!file) {
+            cout << "Error opening file for reading.\n";
+            return;
+        }
+        cout << "File contents:\n";
+        while (getline(file, line)) { // Read the file line by line
+            cout << line;
+        }
+        file.close();
+    }
+};
+
+int main() {
+    Test obj;
+    int choice;
+    do {
+        cout << "\n1. Write\n2. Read\n3. Exit\nEnter your choice: ";
+        cin >> choice;
+        switch (choice) {
+        case 1:
+            obj.writeData();
+            break;
+        case 2:
+            obj.readData();
+            break;
+        case 3:
+            cout << "Exiting program.\n";
+            break;
+        default:
+            cout << "Invalid choice. Try again.\n";
+        }
+    } while (choice != 3);
+    return 0;
+}
